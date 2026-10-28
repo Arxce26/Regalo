@@ -20,7 +20,8 @@ canvas{display:block;width:100%;height:100%;touch-action:none}
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  pointer-events: none; /* Permite que los clics pasen al cometa */
+  pointer-events: auto; /* <-- CAMBIO CLAVE: Atrapa el clic */
+  cursor: pointer; /* <-- Obliga a iOS a reconocerlo como un botón */
   z-index: 10;
 }
 
@@ -182,23 +183,26 @@ function drawComet(){
 // ---------- Música y Mensajes ----------
 
 const musica = new Audio('cancion1.mp3');
-// ¡Ojo! Ya no está aquí el currentTime
 
 const msgToca = document.getElementById('mensaje-toca');
 const msgCumple = document.getElementById('mensaje-cumple');
+const pantallaInter = document.getElementById('pantalla-interactiva'); 
 
-// Iniciar la música y animaciones al hacer el primer clic
-window.addEventListener('pointerdown', () => {
+// Usamos 'click' sobre la capa interactiva en lugar de 'window'
+pantallaInter.addEventListener('click', () => {
   if (musica.paused) {
-    musica.play().catch(e => console.log("Esperando interacción..."));
-
+    musica.play().catch(e => console.log("Error de audio: ", e));
+    
     // 1. Empezar a desvanecer "Toca la pantalla Abbey"
     msgToca.style.opacity = '0';
-
+    
+    // Devolvemos el control para poder arrastrar el cometa
+    pantallaInter.style.pointerEvents = 'none'; 
+    
     // 2. Esperar medio segundo (500ms) a que se desvanezca por completo
     setTimeout(() => {
-      msgToca.remove(); // ¡BOOM! Desaparece por completo del código
-
+      msgToca.remove(); 
+      
       // 3. Mostrar el mensaje de Feliz Cumpleaños
       msgCumple.style.opacity = '1';
     }, 500);
