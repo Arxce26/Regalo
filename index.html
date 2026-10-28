@@ -181,7 +181,7 @@ function drawComet(){
 
 // ---------- Música y Mensajes ----------
 
-const musica = new Audio('cancion.mp3');
+const musica = new Audio('cancion1.mp3');
 // ¡Ojo! Ya no está aquí el currentTime
 
 const msgToca = document.getElementById('mensaje-toca');
@@ -190,7 +190,6 @@ const msgCumple = document.getElementById('mensaje-cumple');
 // Iniciar la música y animaciones al hacer el primer clic
 window.addEventListener('pointerdown', () => {
   if (musica.paused) {
-    musica.currentTime = 175; // <-- AHORA VA AQUÍ ADENTRO
     musica.play().catch(e => console.log("Esperando interacción..."));
 
     // 1. Empezar a desvanecer "Toca la pantalla Abbey"
