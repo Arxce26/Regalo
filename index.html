@@ -182,7 +182,7 @@ function drawComet(){
 // ---------- Música y Mensajes ----------
 
 const musica = new Audio('cancion.mp3');
-musica.currentTime = 175// Iniciar en 2:53 (173 segundos)
+// ¡Ojo! Ya no está aquí el currentTime
 
 const msgToca = document.getElementById('mensaje-toca');
 const msgCumple = document.getElementById('mensaje-cumple');
@@ -190,20 +190,22 @@ const msgCumple = document.getElementById('mensaje-cumple');
 // Iniciar la música y animaciones al hacer el primer clic
 window.addEventListener('pointerdown', () => {
   if (musica.paused) {
+    musica.currentTime = 175; // <-- AHORA VA AQUÍ ADENTRO
     musica.play().catch(e => console.log("Esperando interacción..."));
-    
+
     // 1. Empezar a desvanecer "Toca la pantalla Abbey"
     msgToca.style.opacity = '0';
-    
+
     // 2. Esperar medio segundo (500ms) a que se desvanezca por completo
     setTimeout(() => {
       msgToca.remove(); // ¡BOOM! Desaparece por completo del código
-      
+
       // 3. Mostrar el mensaje de Feliz Cumpleaños
       msgCumple.style.opacity = '1';
     }, 500);
   }
 }, { once: true });
+
 // ---------- nave ----------
 function drawShip(){
   ctx.save();ctx.translate(S.x,S.y);ctx.rotate(S.a);ctx.scale(S.s,S.s);
